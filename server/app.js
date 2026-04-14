@@ -7,7 +7,7 @@ import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import courseRoutes from "./routes/courseRoutes.js";
 import attendanceRoutes from "./routes/attendanceRoutes.js";
-// import resultRoutes from "./routes/resultRoutes.js";
+import resultRoutes from "./routes/resultRoutes.js";
 import { errorHandler } from "./middleware/errorMiddleware.js";
 
 // 🔹 Load correct env file
@@ -47,7 +47,11 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/attendance", attendanceRoutes);
-// app.use("/api/results", resultRoutes);
+app.use("/api/results", resultRoutes);
+
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
 
 // 🔹 Error Handler (ALWAYS LAST)
 app.use(errorHandler);
