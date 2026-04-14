@@ -21,7 +21,21 @@ dotenv.config({
 const app = express();
 
 // 🔹 Middlewares
-app.use(cors());
+const allowedOrigins = [
+  "http://localhost:5173", // local frontend
+  process.env.FRONTEND_URL // deployed frontend
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS not allowed"));
+    }
+  },
+  credentials: true,
+}));
 app.use(express.json());
 
 // 🔹 Routes
